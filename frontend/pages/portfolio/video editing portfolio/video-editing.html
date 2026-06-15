@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Video Editing Portfolio</title>
+  <link rel="stylesheet" href="video-editing-style.css">
+  <link rel = "icon" href = "../../../images/landing-page-pictures/favicon-32x32.png">
+</head>
+<body>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+  <div class="portfolio-strip">
+    <div class="portfolio-track" id="portfolio-track">
+    </div>
+  </div>
+
+  <div class="video" id="video-overlay" aria-hidden="true">
+    <button id="overlay-back" class="overlay-back">back</button>
+    <div id="yt-player"></div>
+  </div>
+
+  <a id="home-bottom" class="home-bottom" href="../../landing-page/index.html">home</a>
+
+  <script>
+    const videoIds = ['Yctkl3nWwuQ','SFNfqxfq7zI','B2Uufqrjb1A','bk6XwXXe02g','4GayFmKtWsI','wGZTYrr538g','N63brJcIkO8','k0b1ZxSgRBc','euAH0R7XaJc','_RiW97JF19c'];
+
+    const track = document.getElementById('portfolio-track');
+    const overlay = document.getElementById('video-overlay');
+
+    function makeCard(id, idx){
+      const c = document.createElement('div');
+      c.className = 'thumb-card';
+      c.dataset.index = idx;
+      const img = document.createElement('img');
+      img.className = 'thumb-img';
+      img.alt = 'thumb';
+      img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      c.appendChild(img);
+      return c;
+    }
+
+    function populate(){
+      track.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      videoIds.forEach((id, i) => frag.appendChild(makeCard(id, i)));
+      videoIds.forEach((id, i) => {
+        const clone = makeCard(id, i);
+        clone.classList.add('clone');
+        frag.appendChild(clone);
+      });
+      track.appendChild(frag);
+
+      // wait for images then measure exact width and set animation
+      const imgs = track.querySelectorAll('img.thumb-img');
+      let count = 0;
+      const total = imgs.length;
+
+      function startWhenReady(){
+        count++;
+        if(count === total) startMarquee();
+      }
+
+      if(total === 0){ startMarquee(); return; }
+      imgs.forEach(img => {
+        if(img.complete) startWhenReady();
+        else {
+          img.addEventListener('load', startWhenReady);
+          img.addEventListener('error', startWhenReady);
+        }
+      });
+    }
+
+    function startMarquee(){
+      // measure the width of just the original set (first half of cards)
+      const cards = track.querySelectorAll('.thumb-card:not(.clone)');
+      let totalWidth = 0;
+      cards.forEach(card => {
+        const style = window.getComputedStyle(card);
+        totalWidth += card.offsetWidth + parseInt(style.marginRight || 0) + 18; // 18 = gap
+      });
+
+      // inject a keyframe that translates exactly the original set width
+      const styleEl = document.createElement('style');
+      styleEl.id = 'marquee-keyframe';
+      styleEl.textContent = `
+        @keyframes slide {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-${totalWidth}px); }
+        }
+      `;
+      const existing = document.getElementById('marquee-keyframe');
+      if(existing) existing.remove();
+      document.head.appendChild(styleEl);
+
+      track.classList.add('running');
+    }
+
+    populate();
+
+    // re-measure on resize to keep it seamless
+    window.addEventListener('resize', () => {
+      track.classList.remove('running');
+      setTimeout(() => startMarquee(), 50);
+    });
+
+    let player, playerReady = false;
+
+    track.addEventListener('click', e => {
+      const card = e.target.closest('.thumb-card');
+      if(!card) return;
+      const idx = parseInt(card.dataset.index, 10);
+      openPlayer(idx);
+    });
+
+    function openPlayer(idx){ overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false'); loadAndPlay(videoIds[idx]); }
+    function closePlayer(){ overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); if(player && player.stopVideo) player.stopVideo(); }
+
+    const overlayBackBtn = document.getElementById('overlay-back');
+    if(overlayBackBtn) overlayBackBtn.addEventListener('click', closePlayer);
+
+    function onYouTubeIframeAPIReady(){
+      const s = (function(){ const el = document.querySelector('.video'); if(!el) return {w:480,h:853}; const r = el.getBoundingClientRect(); return { w: Math.max(160, Math.round(r.width)), h: Math.max(160, Math.round(r.height)) }; })();
+      player = new YT.Player('yt-player', { width: s.w, height: s.h, playerVars:{ controls:0, modestbranding:1, rel:0, playsinline:1, iv_load_policy:3, disablekb:1, fs:0, origin: window.location.origin }, events:{ onReady:()=>{ playerReady=true; try{ player.setVolume(100); }catch(_){} resizeIframe(); }, onStateChange:onStateChange, onError:(err)=>{ console.warn('YT player error',err); } } });
+    }
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    (function(){ const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); })();
+
+    function loadAndPlay(id){
+      if(playerReady && player.loadVideoById){
+        resizeIframe();
+        player.loadVideoById({ videoId: id, suggestedQuality: 'hd720' });
+        player.playVideo();
+        setTimeout(resizeIframe, 120);
+      } else {
+        const wait = setInterval(() => {
+          if(playerReady && player.loadVideoById){
+            clearInterval(wait);
+            resizeIframe();
+            player.loadVideoById({ videoId: id, suggestedQuality: 'hd720' });
+            player.playVideo();
+            setTimeout(resizeIframe, 120);
+          }
+        }, 200);
+      }
+    }
+
+    function onStateChange(e){}
+
+    function resizeIframe(){
+      const el = document.querySelector('.video');
+      const r = el.getBoundingClientRect();
+      const h = Math.round(r.height);
+      const w = Math.round(r.width);
+      if(player && player.getIframe){
+        const iframe = player.getIframe();
+        iframe.style.position = 'absolute';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
+        iframe.style.width = w + 'px';
+        iframe.style.height = h + 'px';
+        iframe.style.transform = 'none';
+      }
+      if(player && player.setSize) player.setSize(w, h);
+    }
+    window.addEventListener('resize', () => { setTimeout(resizeIframe, 80); });
+
+    document.addEventListener('keydown', e => {
+      if(!overlay.classList.contains('open')) return;
+      if(e.key === 'Escape'){ closePlayer(); return; }
+      if(!playerReady) return;
+      if(e.key === ' '){ e.preventDefault(); const s = player.getPlayerState(); if(s === YT.PlayerState.PLAYING) player.pauseVideo(); else player.playVideo(); }
+      if(e.key === 'ArrowLeft'){ const t = Math.max(0, player.getCurrentTime()-5); player.seekTo(t, true); }
+      if(e.key === 'ArrowRight'){ const t = Math.min(player.getDuration(), player.getCurrentTime()+5); player.seekTo(t, true); }
+      if(e.key === 'ArrowUp'){ let v=100; try{ v=player.getVolume(); }catch(_){} player.setVolume(Math.min(100, v+5)); }
+      if(e.key === 'ArrowDown'){ let v=100; try{ v=player.getVolume(); }catch(_){} player.setVolume(Math.max(0, v-5)); }
+    });
+  </script>
+</body>
+</html>

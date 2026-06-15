@@ -1,0 +1,49 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/pages/landing-page/index.html"
+    },
+    {
+      "source": "/landing-page.css",
+      "destination": "/pages/landing-page/landing-page.css"
+    },
+    {
+      "source": "/landing-page/landing-page.css",
+      "destination": "/pages/landing-page/landing-page.css"
+    },
+    {
+      "source": "/images/(.*)",
+      "destination": "/images/$1"
+    },
+    {
+      "source": "/googlef50650696219e409.html",
+      "destination": "/pages/landing-page/googlef50650696219e409.html"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/pages/landing-page/sitemap.xml"
+    },
+    {
+      "source": "/landing-page/index.html",
+      "destination": "/pages/landing-page/index.html"
+    },
+    {
+      "source": "/portfolio/video%20editing%20portfolio/video-editing.html",
+      "destination": "/pages/portfolio/video editing portfolio/video-editing.html"
+    },
+    {
+      "source": "/portfolio/video%20editing%20portfolio/video-editing-style.css",
+      "destination": "/pages/portfolio/video editing portfolio/video-editing-style.css"
+    },
+    {
+      "source": "/portfolio/web%20development%20portfolio/web-development.html",
+      "destination": "/pages/portfolio/web development portfolio/web-development.html"
+    },
+    {
+      "source": "/portfolio/web%20development%20portfolio/web-development-style.css",
+      "destination": "/pages/portfolio/web development portfolio/web-development-style.css"
+    }
+
+  ]
+}
