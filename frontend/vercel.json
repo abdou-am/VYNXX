@@ -43,7 +43,12 @@
     {
       "source": "/portfolio/web%20development%20portfolio/web-development-style.css",
       "destination": "/pages/portfolio/web development portfolio/web-development-style.css"
+    },
+    {
+      "source": "/script.js",
+      "destination": "/pages/landing-page/script.js"
     }
+
 
   ]
 }
