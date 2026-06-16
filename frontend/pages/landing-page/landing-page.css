@@ -278,11 +278,12 @@ body{
     text-align: left;
 }
 .trust-subtitle{
-    color : #e53200;
+    color :#d94b4b;
     font-weight : 600;
+    opacity : 80%;
     letter-spacing : -1px;
     word-spacing: 2px;
-    opacity : 60%;
+
     margin-top : 0px;
 }
 .trust-grids{
@@ -1172,9 +1173,9 @@ a{
 .faq-subheading{
     letter-spacing : -1px;
     word-spacing : 2px;
-    color : #FF410D;
-    opacity : 70%;
-    font-weight : 700;
+    color :#d94b4b;
+    font-weight : 600;
+    opacity : 80%;
     width : 40%;
     font-size : 110%;
 }
@@ -1511,11 +1512,11 @@ footer .services{
         text-align: left;
     }
     .trust-subtitle{
-        color : #e53200;
+        color :#d94b4b;
+        opacity : 80%;
         font-weight : 600;
         letter-spacing : -1px;
         word-spacing: 2px;
-        opacity : 60%;
         margin-top : 0px;
     }
     .trust-grids{
