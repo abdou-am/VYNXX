@@ -32,9 +32,9 @@
     font-family : 'inter', sans-serif;
 }
 body{
-    min-height : 100vh;
+    height : 100vh;
     overflow-x : hidden;
-    overflow-y : auto;
+    overflow-y : hidden;
     background-color : #0c0c0c;
     background-image : url("../../../images/video-editing-portfolio-pictures/background\ lines.svg");
     background-size : cover;
@@ -47,9 +47,10 @@ body{
     justify-content : center;
     align-items : center;
     position : relative;
-    margin-top : 40px;
+    height: 100vh;
     gap : 40px;
-    padding-bottom: 40px;
+    padding: 20px 10px 40px;
+    margin-top: 0;
 }
 .circle1 {
     background-color: #ff2a003c;
@@ -174,6 +175,12 @@ span{
     .two-websites{
         gap: 18px;
     }
+    .everything{
+        height: 100vh;
+        overflow-y : hidden;
+        justify-content: center;
+    }
+
 }
 
 @media (max-width: 900px) {
@@ -189,6 +196,11 @@ span{
         align-items: center;
         gap: 20px;
     }
+    .everything{
+        height: 100vh;
+        justify-content: center;
+        overflow-y : hidden;
+    }
 }
 
 @media (max-width: 700px) {
@@ -200,6 +212,11 @@ span{
         font-size: 85%;
         width: 100%;
         letter-spacing: 0;
+    }
+    .everything{
+        height: 100vh;
+        justify-content: center;
+        overflow-y : hidden;
     }
 }
 
@@ -215,8 +232,12 @@ span{
         width: 100%;
     }
     .everything{
-        margin-top: 20px;
+        height: 100vh;
+        overflow-y : hidden;
+        justify-content: center;
+        margin-top: 0;
         gap: 30px;
+        padding-top: 30px;
     }
     .back{
         margin-right: 0;

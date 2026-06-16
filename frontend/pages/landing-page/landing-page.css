@@ -1310,6 +1310,26 @@ form input , textarea{
     color : white;
 }
 
+.budget-input-wrapper{
+    position: relative;
+    width: 100%;
+}
+
+.budget-input-wrapper input{
+    width: 100%;
+    padding-right: 3rem;
+}
+
+.currency-suffix{
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: 600;
+    pointer-events: none;
+}
+
 form input:-webkit-autofill,
 form input:-webkit-autofill:hover,
 form input:-webkit-autofill:focus,
