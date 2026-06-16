@@ -32,8 +32,9 @@
     font-family : 'inter', sans-serif;
 }
 body{
-    height : 100vh;
-    overflow : hidden;
+    min-height : 100vh;
+    overflow-x : hidden;
+    overflow-y : auto;
     background-color : #0c0c0c;
     background-image : url("../../../images/video-editing-portfolio-pictures/background\ lines.svg");
     background-size : cover;
@@ -48,6 +49,7 @@ body{
     position : relative;
     margin-top : 40px;
     gap : 40px;
+    padding-bottom: 40px;
 }
 .circle1 {
     background-color: #ff2a003c;
@@ -97,26 +99,25 @@ a{
     gap : 20px;
     flex-wrap : wrap;
     justify-content : center;
+    width: 100%;
+}
+.left-one,
+.right-one{
+    width : clamp(360px, 90vw, 720px);
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    height : auto;
+    background-size : cover;
+    background-position : center;
+    background-repeat : no-repeat;
+    border-radius : 16px;
+    transition : all 0.5s ease;
 }
 .left-one{
-    width : 720px;
-    height : 405px;
     background-image : url("../../../images/web-development-portfolio-picture/ismail\ website\ screenshot.png");
-    background-size : cover;
-    background-position : center;
-    background-repeat : no-repeat;
-    border-radius : 16px;
-    transition : all 0.5s ease;
 }
 .right-one{
-    width : 720px;
-    height : 405px;
     background-image : url("../../../images/web-development-portfolio-picture/az\ voyage\ website\ screenshot.png");
-    background-size : cover;
-    background-position : center;
-    background-repeat : no-repeat;
-    border-radius : 16px;
-    transition : all 0.5s ease;
 }
 .right-one:hover , .left-one:hover{
     transform : scale(1.03);
@@ -155,4 +156,71 @@ a{
 
 span{
     color : #ff2a00;
+}
+.left-one{
+    display : none;
+}
+
+@media (max-width: 1200px) {
+    .heading{
+        font-size: 300%;
+        margin-left: 0;
+    }
+    .subheading{
+        font-size: 95%;
+        margin-left: 0;
+        width: 90%;
+    }
+    .two-websites{
+        gap: 18px;
+    }
+}
+
+@media (max-width: 900px) {
+    .heading{
+        font-size: 260%;
+    }
+    .subheading{
+        font-size: 90%;
+        width: 88%;
+    }
+    .two-websites{
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .heading{
+        font-size: 220%;
+        letter-spacing: -2px;
+    }
+    .subheading{
+        font-size: 85%;
+        width: 100%;
+        letter-spacing: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    body{
+        background-position: top center;
+    }
+    .heading{
+        font-size: 180%;
+    }
+    .subheading{
+        font-size: 80%;
+        width: 100%;
+    }
+    .everything{
+        margin-top: 20px;
+        gap: 30px;
+    }
+    .back{
+        margin-right: 0;
+        padding: 8px 16px;
+        font-size: 110%;
+    }
 }
