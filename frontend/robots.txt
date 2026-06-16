@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vynxxflow.com/sitemap.xml
